@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque Numérique</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .signin-form {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="signin-form">
+    <h3 class="hint-text">Bibliothèque Numérique</h3>
+    <form action="/" method="POST" id="checkLogin">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control input-lg" name="password" placeholder="Password" required="required">
+        </div>
+        <div class="login-checkbox float-left">
+            {% if messages %}
+                {% for message in messages %}
+                    <label>
+                        <a href="#">{{ message }}</a>
+                    </label>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block signin-btn">Se Connecter</button>
+        </div>
+        <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+    </form>
+    <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
+
+    <hr>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
