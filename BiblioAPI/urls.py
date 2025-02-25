@@ -26,6 +26,7 @@ urlpatterns = [
     path('prod/count', CountViewSet.as_view({'get': 'content'}), name='produits-count'),
     # #  path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     #   path('api/', include('rest_framework.urls')),
+    path('ajouter_livre/', ajouter_livre, name = 'ajouter_livre'),
     path('prod/count/', CountViewSet.as_view({'get': 'content'}), name='produits-count')
    
 ]

@@ -102,7 +102,7 @@ class Abonnement(models.Model):
     date_fin = models.DateField()   #date fin de l'abonnement
 
     def __str__(self):
-        return f"{self.type_abonnement} {self.date_debut} {self.date_fin}"
+        return f"{self.type_abonnement}"
 
 class Etranger(models.Model):
     GENRE_CHOICES = [

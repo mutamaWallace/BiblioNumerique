@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Manage Bibliotecaires</title>
+<title>Manage Etrangeres</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -282,10 +282,10 @@ function validatePasswords() {
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>Manage <b>Bibliotecaires</b></h2>
+						<h2>Manage <b>Etrangeres</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter nouvel Bibliotecaire</span></a>
+						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter nouvel Etranger</span></a>
 						</div>
 				</div>
 			</div>
@@ -295,7 +295,7 @@ function validatePasswords() {
 						<th>
 							<span class="custom-checkbox">
 								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
+								{% comment %} <label for="selectAll"></label> {% endcomment %}
 							</span>
 						</th>
 						<th>Profil</th>
@@ -304,16 +304,14 @@ function validatePasswords() {
 						<th>Username</th>
 						<th>E-mail</th>
 						<th>Genre</th>
-						<th>Matricules</th>
-						<th>Telephones</th>
+						<th>CNI</th>
+						<th>Type Abonnement</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
-
-
 				<tbody>
 
-					{% for bibliotecaire in bibliothecaires %}
+					{% for etrangere in etrangeres %}
 					<tr>
 						<td>
 							<span class="custom-checkbox">
@@ -322,22 +320,20 @@ function validatePasswords() {
 							</span>
 						</td>
 						
-						<td> {% if bibliotecaire.profil %}
-                            <img src="{{ bibliotecaire.profil }}" alt="{{ bibliotecaire.nom }}" />
+						<td> {% if etrangere.profil %}
+                            <img src="{{ etrangere.photo_passport }}" alt="{{ etrangere.nom }}" />
                           {% else %}
                           <p>Aucun profil disponible.</p>
                           {% endif %}</td>
-						
-						<td>{{ bibliotecaire.nom }}</td>
-						<td>{{ bibliotecaire.prenom }}</td>
-						<td>{{ bibliotecaire.username }}</td>
-						<td>{{ bibliotecaire.email}}</td>
-						<td>{{ bibliotecaire.genre }}</td>
-						<td>{{ bibliotecaire.matricule }}</td>
-						<td>{{ bibliotecaire.tel }}</td>
-						
 					
-						
+						<td>{{ etrangere.nom }}</td>
+						<td>{{ etrangere.prenom }}</td>
+						<td>{{ etrangere.username }}</td>
+						<td>{{ etrangere.email}}</td>
+						<td>{{ etrangere.genre }}</td>
+						<td>{{ etrangere.CNI }}</td>
+						<td>{{ etrangere.abonnement }}</td>
+						<td>
 							<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 							<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
@@ -364,11 +360,11 @@ function validatePasswords() {
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form  method="POST" action="{% url 'ajouter_bibliothecaire' %}">
+			<form  method="POST" action="{% url 'ajouter_etrangere' %}">
 
 				{% csrf_token %}
 				<div class="modal-header">						
-					<h4 class="modal-title">Ajouter Un Bibliothecaire</h4>
+					<h4 class="modal-title">Ajouter Etranger</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
@@ -387,20 +383,19 @@ function validatePasswords() {
 					<div class="form-group">
 						<label>e-mail</label>
 						<input type ="email"  class="form-control" required></input>
-					</div>
-					<div class="container">
-						<form id="passwordForm" onsubmit="return validatePasswords()">
-							<div class="form-group">
-								<label for="password">Mot de passe</label>
-								<input type="password" id="password" class="form-control" required>
-							</div>
-				
-							<div class="form-group">
-								<label for="confirmPassword">Confirme le mot de passe</label>
-								<input type="password" id="confirmPassword" class="form-control" required>
-							</div>
-						</div>
-					</form>	
+                        <div class="container">
+                            <form id="passwordForm" onsubmit="return validatePasswords()">
+                                <div class="form-group">
+                                    <label for="password">Mot de passe</label>
+                                    <input type="password" id="password" class="form-control" required>
+                                </div>
+                    
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirme le mot de passe</label>
+                                    <input type="password" id="confirmPassword" class="form-control" required>
+                                </div>
+                            </div>
+                        </form>		
                     <div class="form-group">
                         <label>Genre</label><br>
                         <input type="radio" id="male" name="gender" value="male" required>
@@ -411,17 +406,25 @@ function validatePasswords() {
                         <label for="other">Autre</label>
                     </div>
                     <div class="form-group">
-                        <label for="profileImage">Image de profil</label>
+                        <label for="profileImage">profil</label>
                         <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
                     </div>
+                 
                     <div class="form-group">
-                        <label for="tel">Telephone</label>
-                        <input type = "number" class="form-control" required></input>
+                        <label for="cni">CNI</label>
+                        <input type="charset" class="form-control" required>
                     </div>
+                    
                     <div class="form-group">
-                        <label for="profileImage">Matricule</label>
-                        <input type="text" class="form-control" required>
-                    </div>		
+						<label for="abonnement">Abonnement</label>
+						<select class="form-control" id="abonnement" name="abonnement" required>
+                            <option value="" selected>Choisissez le type d'abonnement</option> 
+                            {% for abonnement in abonnements %}
+							<option value="" >{{ abonnement.type_abonnement }}</option>
+							<!-- Ajoutez d'autres auteurs ici -->
+							{% endfor  %}
+						</select>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">

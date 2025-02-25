@@ -57,6 +57,39 @@ def ajouter_livre(request):
     else:
         form = LivreForm()
     return render(request, 'listeLivres.html', {'form': form})
+
+
+
+
+
+def ajouter_bibliothecaire(request):
+    if request.method == 'POST':
+        form = PersonneForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('bibliothecaire')  # Remplacez par la vue où vous souhaitez rediriger
+    else:
+        form = PersonneForm()
+    return render(request, 'bibliothecaire.html', {'form': form})
+
+
+
+
+def ajouter_etrangere(request):
+    if request.method == 'POST':
+        form = EtrangerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('etrangere')  # Remplacez par la vue où vous souhaitez rediriger
+    else:
+        form = EtrangerForm()
+    return render(request, 'etrangere.html', {'form': form})
+
+
+
+
+
+
 """la classe pour enregistrer une etagere dans le systeme"""
 
 # class EtagereCreateView(TemplateView):
@@ -86,22 +119,71 @@ def ajouter_livre(request):
 def liste_livres(request):
     livres = Livre.objects.all()  # Récupère tous les livres
     auteurs = Auteur.objects.all()
-    atageres = Etagere.objects.all()
+    etageres = Etagere.objects.all()
     compartiments = Compartiment.objects.all()
-    empacements = Emplacement.objects.all()
+    emplacements = Emplacement.objects.all()
     
     content = {
         'livres':livres,
         'auteurs':auteurs,
-         'atageres':atageres,
+         'etageres':etageres,
         'compartiments':compartiments,
-        'empacements':empacements,
+        'emplacements':emplacements,
     }
     return render(request, 'listelivres.html', content)
 
 def liste_bibliothecaires(request):
-    bibliothecaires = Personne.objects.all() 
+    bibliothecaires = Personne.objects.all()
+    
     return render(request, 'bibliothecaire.html', {'bibliothecaires': bibliothecaires})
+
+
+
+def liste_etrangeres(request):
+    etrangeres = Etranger.objects.all() 
+    abonnements = Abonnement.objects.all() 
+    content = {
+        'etrangeres':etrangeres,
+        'abonnements':abonnements,
+    
+    }
+    
+
+    return render(request, 'etrangere.html', {'etrangeres': etrangeres})
+
+def liste_universites(request):
+    universites = Universite.objects.all() 
+    campus = Campus.objects.all() 
+    content = {
+        'universites':universites,
+        'campus':campus,
+    
+    }
+    
+
+    return render(request, 'partenaire.html', {'content': content})
+
+
+
+
+def liste_emprunts(request):
+    emprunts = Emprunt.objects.all() 
+    personnes = Personne.objects.all() 
+    livres = Livre.objects.all()
+    etudiants = Etudiant.objects.all()
+    etrangeres =Etranger.objects.all()
+    context = {
+        'emprunts': emprunts,
+        'personnes':personnes,
+         'livres': livres,
+         'etudiants': etudiants,
+         'etrangeres':etrangeres
+             
+    }
+    
+
+    return render(request, 'emprunts.html', {'context': context})
+
 
 
 class StatistiqueView(TemplateView):

@@ -43,7 +43,7 @@ class AbonnementAdmin(admin.ModelAdmin):
 
 @admin.register(Etranger)
 class EtrangerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nom', 'prenom', 'email', 'username', 'genre', 'CNI')
+    list_display = ('id', 'nom', 'prenom', 'email', 'username', 'genre', 'CNI','abonnement')
     search_fields = ('nom', 'prenom', 'email', 'username')
 
 @admin.register(Campus)

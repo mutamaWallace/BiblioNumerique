@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from BiblioAPI.models import *
 from rest_framework import viewsets,response
 from BiblioAPI.serializers import *
+from BiblioAPI.forms import *
 
 
 
@@ -43,36 +44,7 @@ class InscrireViewSet(viewsets.ModelViewSet):
     queryset = Inscrire.objects.all()
     serializer_class = InscrireSerializer
 
-    # def list(self, request):
-    #     queryset = self.get_queryset()
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return response(serializer.data)
-
-    # def create(self, request):
-    #     serializer = self.get_serializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # def retrieve(self, request, pk=None):
-    #     queryset = self.get_queryset()
-    #     inscribe = self.get_object()
-    #     serializer = self.get_serializer(inscribe)
-    #     return response(serializer.data)
-
-    # def update(self, request, pk=None):
-    #     inscribe = self.get_object()
-    #     serializer = self.get_serializer(inscribe, data=request.data, partial=True)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # def destroy(self, request, pk=None):
-    #     inscribe = self.get_object()
-    #     inscribe.delete()
-    #     return response(status=status.HTTP_204_NO_CONTENT)
+   
 
 class EtagereViewSet(viewsets.ModelViewSet):
     queryset = Etagere.objects.all()
@@ -126,3 +98,13 @@ class LoginViewSet(viewsets.ModelViewSet):
                 return response(user)
             return response(user)
 
+def ajouter_livre(request):
+    if request.method == 'POST':
+        form = LivreForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('listelivres')  # Remplacez par la vue où vous souhaitez rediriger
+    else:
+        form = LivreForm()
+    return render(request, 'listeLivres.html', {'form': form})
+"""la classe pour enregistrer une etagere dans le systeme"""
