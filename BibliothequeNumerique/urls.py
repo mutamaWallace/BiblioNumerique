@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
      path('', include('BiblioApp.urls')),
     path('', include('BiblioAPI.urls')),
-    path('dashboardPersonnel/', TemplateView.as_view(template_name='BiblioApp/templates/dashboardPersonnel.html')),  # Page d'accueil
-    path('login2/', TemplateView.as_view(template_name='BiblioApp/templates/login2.html')),  # Page de login
+    # path('dashboardPersonnel/', TemplateView.as_view(template_name='BiblioApp/templates/dashboardPersonnel.html')),  # Page d'accueil
+    # path('login2/', TemplateView.as_view(template_name='BiblioApp/templates/login2.html')),  # Page de login
     # path('profile', TemplateView.as_view(template_name='accounts/profile.html')),
 ]

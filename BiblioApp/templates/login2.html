@@ -131,9 +131,10 @@
 </style>
 </head>
 <body>
+
 <div class="signin-form">
 	<h3 class="hint-text" >Bibliotheque Numerique</h3>
-    <form action="/" method="POST" id="checkLogin">
+    <form action="{% url 'logIn' %}" method="POST" id="checkLogin">
 		{% csrf_token %}
         <div class="form-group">
         	<input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
@@ -156,7 +157,7 @@
 		
         <div class="text-center small"><a href="#">Forgot Your password?</a></div>
     </form>
-    <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
+    {% comment %} <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div> {% endcomment %}
 </div>
 </body>
 </html>

@@ -18,11 +18,13 @@ from django.urls import path, include
 from BiblioApp.views import *
 from django.contrib import admin
 from BiblioAPI.views import *
+from BiblioApp import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     # path('profile/', LoginView.as_view(), name='profile'),
-    path('login2/', LoginView.as_view(), name='login2'),
+    path('logIn', views.logIn, name='logIn'),
+    path('ajouter_livre', views.ajouter_livre, name = 'ajouter_livre'),
     path('liste_bibliothecaires/', liste_bibliothecaires, name = 'liste_bibliotecaires'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('dashboardPersonnel/', DashboardPersonnelView.as_view(), name='dashboardPersonnel'), 
@@ -32,6 +34,8 @@ urlpatterns = [
     path('liste_emprunts',liste_emprunts, name = 'liste_emprunts'),
     path('liste_livres/', liste_livres, name='liste_livres'),
     path('liste_universites/', liste_universites, name = 'liste_universites'),
+    path('',views.home, name = 'home'),
+    path('register', views.register, name = 'register'),
     # path('etagere/', EtagereCreateView.as_view(), name='etagere'),
     # path('compartiment/', ajouter_compartiment, name='compartiment'),
     # path('', ProfileView.as_view()),

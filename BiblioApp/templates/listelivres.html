@@ -358,7 +358,7 @@ $(document).ready(function(){
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form method="POST" action="{% url 'ajouter_livre' %}">
+			<form method="POST" action="/ajouter_livre">
 				{% csrf_token %}
 				<div class="modal-header">						
 					<h4 class="modal-title">Ajouter Un Livre</h4>
@@ -367,7 +367,7 @@ $(document).ready(function(){
 				<div class="modal-body">					
 					<div class="form-group">
 						<label>Titre</label>
-						<input type="text" class="form-control" required>
+						<input type="text" name = "titre" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label for="language">Langue</label>
@@ -384,8 +384,8 @@ $(document).ready(function(){
 
 
 					<div class="form-group">
-						<label for="pageCount">Spécifiez l'annee de publication</label>
-						<input type="number" class="form-control" id="pageCount" name="pageCount" required min="1">
+						<label for="anneepulication">Spécifiez l'annee de publication</label>
+						<input type="number" class="form-control" id="anneepulication" name="anneepulication" required min="1">
 					</div>
 
 				
@@ -418,8 +418,8 @@ $(document).ready(function(){
 					</div>	
 				
 					<div class="form-group">
-						<label for="location">Compartiment du livre</label>
-						<select class="form-control" id="location" name="location" required>
+						<label for="compartiment">Compartiment du livre</label>
+						<select class="form-control" id="compartiment" name="compartiment" required>
 							<option value="" selected>Choisissez un Compartiment</option>
 							{% for compartiment in compartiments %}
 							<option value="">{{ compartiment.domaineLivre }} </option>
@@ -430,8 +430,8 @@ $(document).ready(function(){
 
 
 					<div class="form-group">
-						<label for="location">Emplacement du livre</label>
-						<select class="form-control" id="location" name="location" required>
+						<label for="emplacement">Emplacement du livre</label>
+						<select class="form-control" id="emplacement" name="emplacement" required>
 							<option value="" selected>Choisissez un emplacement</option>
 							{% for emplacement in emplacements %}
 							<option value="">{{ emplacement.numero }} </option>

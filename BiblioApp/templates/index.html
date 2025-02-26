@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+ 
+{%  block content %}
+
+<style>
+
+    .btn {
+        background-color: #4faf4c;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3ms;
+        width: 10%;
+    }
+    
+    .btn:hover {
+        background-color: #55bae9;
+    }
+    
+    @media (max-width: 50px) {
+        form {
+            padding: 15px;
+        }
+    }
+</style>
+
+{% if user.is_authenticated %}
+
+<h3> Hello {{ firstname }} Welcome in our site</h3>
+<button  type="submit"><a href="/logout">Se Deconnecter</a></button> 
+
+{% else %}
+
+<button class="btn" type="submit"><a href="/register">S'enregistrer</a></button>
+
+<br><br>ou<br><br>
+<button  class="btn" type="submit"><a href="/logIn">Se Connecter</a></button>
+
+{% endif %}
+{% comment %} {% endcomment %}
+{%  endblock %}

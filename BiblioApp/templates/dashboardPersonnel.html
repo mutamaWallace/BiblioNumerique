@@ -34,7 +34,7 @@
 <script src="{% static 'vendor/chartjs/Chart.min.js' %}"></script>
 </head>
 <body>
-	
+	{% block content %}
 	<div class="page-wrapper chiller-theme toggled">
 		<a id="show-sidebar" class="btn btn-sm btn-dark" href="{% url 'statistiques' %}"> <i
 			class="fas fa-bars"></i>
@@ -53,7 +53,7 @@
 							alt="User picture">
 					</div>
 					<div class="user-info">
-						<span class="user-name"> <strong {{username.username}}> Nom</strong>
+						<span class="user-name"> <strong > {{username.username}}</strong>
 						</span> <span class="user-role">ROLE</span> <span class="user-status">
 							<i class="fa fa-circle"></i> <span>Online</span>
 						</span>
@@ -106,13 +106,13 @@
 			</div>
 			<!-- sidebar-content  -->
 			<div class="sidebar-footer">
-				<a href="#"> <i class="fa fa-power-off"></i> <span>Déconnexion</span>
+				<a href="/logIn"> <i class="fa fa-power-off"></i> <span>Déconnexion</span>
 				</a>
 			</div>
 		</nav>
 		<!-- sidebar-wrapper  -->
-                    {% block content %}
-                    {% endblock %}
+                
+                    
 
 
 		</div>
@@ -120,7 +120,7 @@
 		<!-- page-content" -->
     	</div>
 
-
+		{% endblock %}
 </body>
 
 	<!-- page-wrapper-->
