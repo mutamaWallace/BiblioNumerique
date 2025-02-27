@@ -395,10 +395,10 @@ $(document).ready(function(){
 					</div>		
                     <div class="form-group">
 						<label for="author">Auteur du Livre</label>
-						<select class="form-control" id="author" name="author" required>
-							<option value="" selected>Choisissez l'auteur du livre</option> 
+						<select class="form-control" id="author" required>
+							<option value="{{ auteur.nom }}" selected>Choisissez l'auteur du livre</option> 
 							{% for auteur in auteurs %}
-							<option value="" >{{ auteur.nom }}</option>
+							<option value="{{ auteur.nom }}"  name="author">{{ auteur.nom }}</option>
 							
 							
 							{% endfor  %}
@@ -408,10 +408,10 @@ $(document).ready(function(){
 
 					<div class="form-group">
 						<label for="location">Etagere du livre</label>
-						<select class="form-control" id="location" name="location" required>
-							<option value="" selected>Choisissez un etagere</option>
+						<select class="form-control" id="location" required>
+							<option name="location"  value="{{ etagere.nom }}" selected>Choisissez un etagere</option>
 							{% for etagere in etageres %}
-							<option value="">{{ etagere.nom }} </option>
+							<option value="{{ etagere.nom }}">{{ etagere.nom }} </option>
 							{% endfor  %}
 							<!-- Ajoutez d'autres emplacements ici -->
 						</select>
@@ -419,10 +419,10 @@ $(document).ready(function(){
 				
 					<div class="form-group">
 						<label for="compartiment">Compartiment du livre</label>
-						<select class="form-control" id="compartiment" name="compartiment" required>
+						<select class="form-control" id="compartiment"  required>
 							<option value="" selected>Choisissez un Compartiment</option>
 							{% for compartiment in compartiments %}
-							<option value="">{{ compartiment.domaineLivre }} </option>
+							<option name="compartiment" value="{{ compartiment.domaineLivre }} ">{{ compartiment.domaineLivre }} </option>
 							{% endfor  %}
 							<!-- Ajoutez d'autres emplacements ici -->
 						</select>
@@ -431,10 +431,10 @@ $(document).ready(function(){
 
 					<div class="form-group">
 						<label for="emplacement">Emplacement du livre</label>
-						<select class="form-control" id="emplacement" name="emplacement" required>
+						<select class="form-control" id="emplacement"  required>
 							<option value="" selected>Choisissez un emplacement</option>
 							{% for emplacement in emplacements %}
-							<option value="">{{ emplacement.numero }} </option>
+							<option name="emplacement" value="{{ emplacement.numero }}">{{ emplacement.numero }} </option>
 							{% endfor  %}
 							<!-- Ajoutez d'autres emplacements ici -->
 						</select>
@@ -494,7 +494,7 @@ $(document).ready(function(){
 						<select class="form-control" id="author" name="author" required>
 							<option value="" selected>Choisissez l'auteur du livre</option> 
 							{% for auteur in auteurs %}
-							<option value="" >{{ auteur.nom }}</option>
+							<option value="{{ auteur.nom }}" >{{ auteur.nom }}</option>
 							
 							
 							{% endfor  %}
@@ -507,7 +507,7 @@ $(document).ready(function(){
 						<select class="form-control" id="location" name="location" required>
 							<option value="" selected>Choisissez un etagere</option>
 							{% for etagere in etageres %}
-							<option value="">{{ etagere.nom }} </option>
+							<option value="{{ etagere.nom }}">{{ etagere.nom }} </option>
 							{% endfor  %}
 							<!-- Ajoutez d'autres emplacements ici -->
 						</select>
@@ -518,7 +518,7 @@ $(document).ready(function(){
 						<select class="form-control" id="location" name="location" required>
 							<option value="" selected>Choisissez un Compartiment</option>
 							{% for compartiment in compartiments %}
-							<option value="">{{ compartiment.domaineLivre }} </option>
+							<option value="{{ compartiment.domaineLivre }}">{{ compartiment.domaineLivre }} </option>
 							{% endfor  %}
 							<!-- Ajoutez d'autres emplacements ici -->
 						</select>
@@ -527,10 +527,10 @@ $(document).ready(function(){
 
 					<div class="form-group">
 						<label for="location">Emplacement du livre</label>
-						<select class="form-control" id="location" name="location" required>
+						<select class="form-control" id="location"required>
 							<option value="" selected>Choisissez un emplacement</option>
 							{% for emplacement in emplacements %}
-							<option value="">{{ emplacement.numero }} </option>
+							<option value="{{ emplacement.numero }}"  name="location" >{{ emplacement.numero }} </option>
 							{% endfor  %}
 							<!-- Ajoutez d'autres emplacements ici -->
 						</select>

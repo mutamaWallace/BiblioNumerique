@@ -7,7 +7,7 @@ from BiblioAPI.forms import *
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework import permissions
+from rest_framework.response import Response
 from .permissions import IsWallaceAdmin 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -16,6 +16,7 @@ import requests
 
 
 def ajouter_livre_api(request):
+    
     if request.method == 'POST':
         try:
             # Traitez les données ici
@@ -68,13 +69,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         return token
     
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    serializer_class = CustomTokenObtainPairSerializer
-    permission_classes = (IsWallaceAdmin,) 
+    
+    
+    
 
-# class CustomTokenObtainPairView(TokenObtainPairView):
-#     serializer_class = CustomTokenObtainPairSerializer
-#     permission_classes = (permissions.AllowAny,)  # Autoriser tout le monde à accéder à cette vue
+    
 
 
 class EmpruntViewSet(viewsets.ModelViewSet):
@@ -173,7 +172,7 @@ class CountViewSet(viewsets.ModelViewSet):
             'Universite_count':Universite_count,
             'Emprunts_count':Emprunts_count
         }
-        return response({'content': content})
+        return Response({'content': content})
     
 class LoginViewSet(viewsets.ModelViewSet):
     
@@ -182,8 +181,8 @@ class LoginViewSet(viewsets.ModelViewSet):
             password = request.GET.get('password', False)
             user = authenticate(username=username, password=password)
             if user is not None and user.is_active:
-                return response(user)
-            return response(user)
+                return Response(user)
+            return Response(user)
 
 def ajouter_livre(request):
     if request.method == 'POST':

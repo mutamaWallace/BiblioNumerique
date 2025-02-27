@@ -1,4 +1,4 @@
- {% extends "index.html" %}
+ {% comment %} {% extends "index.html" %} {% endcomment %}
 
  
  {%  block content %}
@@ -71,7 +71,7 @@
 
  <strong>  {{ message }}</strong>
  {% endfor %}
-<h4>S'enregistrer ici</h4>
+<h4></h4>
 
 <form method="POST" action="/register">
     {% csrf_token %}

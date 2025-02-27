@@ -9,8 +9,16 @@ from django.contrib import messages
 from BiblioAPI.forms import *
 from django.contrib.auth.models import User
 from BibliothequeNumerique import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 import requests
+from .token import generatorToken
+
+# pour la verification de l'utilisateur par son email
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_text
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+
 # class LoginView(TemplateView):
 #     template_name = 'login2.html'
 
@@ -50,11 +58,13 @@ def logIn(request):
         username = request.POST ['username']
         password = request.POST ['password']
         user = authenticate(username = username, password = password)
+        my_user = User.objects.get(username=username)
         if user is not None :
             login(request, user)
             firstname = user.first_name
             return render(request, 'dashboardPersonnel.html')            
-            
+        elif my_user.is_active == False:
+            messages.error(request, 'Desole vous n,avez pas confirme votre email faite le avant de vous connecter')
         else :
             messages.error(request, 'Vous n''\'etes pas reconnus')  
             return redirect('logIn')
@@ -89,7 +99,7 @@ def ajouter_livre(request):
             compartiment = request.POST.get('compartiment')
             emplacement = request.POST.get('emplacement')
 
-            # Préparer les données pour l'API
+            # Préparons les données pour l'API
             data = {
                 'titre': titre,
                 'language': language,
@@ -100,26 +110,26 @@ def ajouter_livre(request):
                 'emplacement': emplacement,
             }
 
-            # Si vous devez envoyer une image, vous pourriez utiliser `files` pour l'upload
+            # Si on doit envoyer une image, on pourrait utiliser `files` pour l'upload
             files = {
                 'bookImage': bookImage,
             }
-
-            # Remplacez 'URL_DE_VOTRE_API' par l'URL de votre API
-            api_url = 'http://127.0.0.1:8080/BiblioAPI/ajouter_livre_api'
+            # response = None 
+            # on remplace URL par l'URL de mon API
+            api_url = 'http://127.0.0.1:8080/ajouter_livre_api'
             response = requests.post(api_url, data=data, files=files)
 
         if response.status_code == 201:  # Vérifiez que l'API a répondu positivement
             return JsonResponse({'message': 'Livre ajouté avec succès!'}, status=201)
         else:
-            return JsonResponse({'error': 'Erreur lors de l\'ajout du livre.'}, status=response.status_code)
+            return JsonResponse({'error': 'Erreur lors de l ,ajout du livre.'}, status=response.status_code)
 
-        return redirect('listelivre')  # Modifiez cela selon votre logique de redirection
-   
-
-
-
-
+        return redirect('listelivre')  # Modifiez cela selon ta logique de redirection  
+    
+    
+    
+    
+    
 def ajouter_bibliothecaire(request):
     if request.method == 'POST':
         form = PersonneForm(request.POST, request.FILES)
@@ -289,17 +299,55 @@ def register(request):
         user = User.objects.create_user(username, email, password)
         user.first_name = firstname
         user.last_name = lastname
+        user.is_active = False
         user.save()
         messages.success(request, 'Votre compte a ete cree  avec succes')
+        # l'envoi de l'email qui dit bonjour
+        
+     
         subject = "Bienvenu sur notre application pour la BN"
         message =  "Bienvenue"+ user.first_name +" "+ user.last_name+"nous sommes heureux de vous compter parmi nous  Merci Willy Programmeur"
         from_email = settings.EMAIL_HOST_USER
         to_list = [user.email]
         send_mail (subject, from_email,message, to_list, fail_silently=False)
-        
+       
+        # email de confirmation 
+        current_site = get_current_site(request)
+        email_subject = "Confirmation de l'adresse email sur willy pro"   
+        messageConfirm =  render_to_string("emailconfirm.html", {
+            "name": user.first_name,
+            "domaine": current_site.domain,
+            "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+            "token":generatorToken.make_token(user)
+        })  
+        email = EmailMessage(
+            email_subject, messageConfirm, settings.EMAIL_HOST_USER,[user.email]
+        )
+        email.fail_silently = False
+        email.send()
         
         return redirect('logIn')
   
             
     return render(request,'register.html')
 
+
+# cette fonction permet a l'utilisateur de s'activer via son email
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk = uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+        
+    if user is not None and generatorToken.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, "Votre compte a ete active felicitation connectez vous maintenant")
+        return redirect('logIn')
+    else:
+        messages.error(request, 'activation echoue!!!'),
+        return redirect('home')
+        
+        
+        

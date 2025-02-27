@@ -1,0 +1,9 @@
+{% autoescape off %}
+Bienvenu sur Willy pro login system
+Bonjour {{name}}
+confirmer votre adresse email en cliquant sur le suivant
+
+lien :http://127.0.0.1:8080{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+
+{% endautoescape %}
