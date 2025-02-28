@@ -24,7 +24,7 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('profile/', LoginView.as_view(), name='profile'),
     path('logIn', views.logIn, name='logIn'),
-    path('ajouter_livre', views.ajouter_livre, name = 'ajouter_livre'),
+    path('ajouter_livre/', views.ajouter_livre, name = 'ajouter_livre'),
     path('liste_bibliothecaires/', liste_bibliothecaires, name = 'liste_bibliotecaires'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('dashboardPersonnel/', DashboardPersonnelView.as_view(), name='dashboardPersonnel'), 

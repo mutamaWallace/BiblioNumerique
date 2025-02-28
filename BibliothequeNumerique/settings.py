@@ -69,6 +69,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'BibliothequeNumerique.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

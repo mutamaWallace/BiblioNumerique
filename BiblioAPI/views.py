@@ -35,7 +35,7 @@ def ajouter_livre_api(request):
             # Créez une instance du modèle Livre
             livre = Livre(
                 titre=titre,
-                language=language,
+                langueLivre=language,
                 anneepulication=anneepulication,
                 author=author,
                 location=location,
@@ -54,7 +54,7 @@ def ajouter_livre_api(request):
 
         except Exception as e:
             # Debug : afficher l'erreur
-            print("Erreur lors de l'ajout du livre:", str(e))
+            print("Erreur lors de l'ajout du livre  dans la base de donnees :", str(e))
             return JsonResponse({'error': str(e)}, status=400)
 
     return JsonResponse({'error': 'Méthode non autorisée.'}, status=405)
@@ -68,13 +68,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Ajoutez des claims personnalisés si nécessaire
         token['username'] = user.username
         return token
-    
-    
-    
-    
-
-    
-
 
 class EmpruntViewSet(viewsets.ModelViewSet):
     

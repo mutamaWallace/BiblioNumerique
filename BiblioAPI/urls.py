@@ -30,7 +30,7 @@ urlpatterns = [
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # path('api/', include('rest_framework.urls')),
     # path('ajouter_livre/', ajouter_livre, name = 'ajouter_livre'),
-    path('ajouter_livre_api/', ajouter_livre_api, name='ajouter_livre_api'),
+    path('ajouter_livre_api', ajouter_livre_api, name='ajouter_livre_api'),
     path('prod/count/', CountViewSet.as_view({'get': 'content'}), name='produits-count')
    
 ]

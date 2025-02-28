@@ -89,7 +89,9 @@ def profile_view(request):
 
 
 def ajouter_livre(request):
-        if request.method == 'POST':
+    
+    response = None
+    if request.method == 'POST':
             titre = request.POST.get('titre')
             language = request.POST.get('language')
             anneepulication = request.POST.get('anneepulication')
@@ -116,15 +118,15 @@ def ajouter_livre(request):
             }
             # response = None 
             # on remplace URL par l'URL de mon API
-            api_url = 'http://127.0.0.1:8080/ajouter_livre_api'
+            api_url = 'http://127.0.0.1:8080/BiblioAPI/ajouter_livre_api'
             response = requests.post(api_url, data=data, files=files)
 
-        if response.status_code == 201:  # Vérifiez que l'API a répondu positivement
-            return JsonResponse({'message': 'Livre ajouté avec succès!'}, status=201)
-        else:
-            return JsonResponse({'error': 'Erreur lors de l ,ajout du livre.'}, status=response.status_code)
+    if response :# Vérifiez que l'API a répondu positivement
+        return JsonResponse({'message': 'Livre ajouté avec succès!'})
+    else:
+        return JsonResponse({'error': 'Erreur lors de l ,ajout du livre.'})
 
-        return redirect('listelivre')  # Modifiez cela selon ta logique de redirection  
+    return redirect('listelivre')  # Modifiez cela selon ta logique de redirection  
     
     
     
